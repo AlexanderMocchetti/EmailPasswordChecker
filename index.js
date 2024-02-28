@@ -11,23 +11,44 @@ emRes = document.getElementById("email-result")
 
 pwBtn.addEventListener("click", () => {
     let pw = pwFld.value;
-    let mess;
     pwRes.style.display = 'inline'
-    if (pw.length === 0){
-        mess = "Campo vuoto"
-        pwRes.textContent = mess;
+    if (pw.length === 0) {
+        pwRes.textContent = "Campo vuoto"
         return;
     }
     if (pw.length < 6) {
-        mess = "Password con meno di 6 caratteri"
-        pwRes.textContent = mess
-        return
+        pwRes.textContent = "Password deve contenere almeno 6 caratteri"
+        return;
     }
-    if (pw.match('^(?=.*\\d)(?=.*[A-Z])(?=.*[!@#$%^&*()-_+=]).*$')) {
-        mess = "Password corretta"
-        pwRes.textContent = mess
-    } else {
-        mess = "Password deve contenere almeno un numero, un carattere speciale e una lettera maiuscola"
-        pwRes.textContent = mess
+    if (pw.search(/[^A-Z]*/) !== -1) {
+        pwRes.textContent = "Password deve contenere almeno una lettera maiuscola"
+        return;
     }
+    if (pw.search(/[^a-z]*/) !== -1) {
+        pwRes.textContent = "Password deve contenere almeno una lettera minuscola"
+        return;
+    }
+    if (pw.search(/[^0-9]*/) !== -1) {
+        pwRes.textContent = "Password deve contenere almeno un numero"
+        return;
+    }
+    if (pw.search(/^[a-zA-Z0-9]*$/) !== -1) {
+        pwRes.textContent = "Password deve contenere almeno un carattere speciale"
+        return;
+    }
+    pwRes.textContent = "Password è corretta"
 })
+
+emBtn.addEventListener("click", () => {
+    let em = emFld.value;
+    emRes.style.display = "inline"
+    if (em.length === 0) {
+        pwRes.textContent = "Campo vuoto"
+        return;
+    }
+    if (em.search(/^[^@]+@[^.@]+\.[^.@]{2,}$/) !== -1) {
+        pwRes.textContent = "Email valida"
+    } else {
+        pwRes.textContent = "Email non valida"
+    }
+}) 
